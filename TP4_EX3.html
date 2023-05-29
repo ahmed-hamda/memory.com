@@ -1,0 +1,143 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    td {
+        background-image: url(../ex3/backg.png);
+        width: 100px;
+        height: 150px;
+        border: 1px solid black;
+        border-radius: 5%;
+
+    }
+
+    table {
+        border-spacing: 10px;
+        background-color: rgb(191, 221, 21);
+    }
+
+    .h {
+        opacity: 0;
+    }
+
+    button {
+        background-color: rgb(110, 7, 119);
+        color: aliceblue;
+        border-color: rgb(110, 7, 119);
+        border-radius: 20px 20px;
+        font-size: larger;
+        font-family: "Ananda Black";
+    }
+</style>
+
+<body>
+    <center>
+        <br><br>
+        <table>
+            <tr>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+                <td id="4"></td>
+            </tr>
+            <tr>
+                <td id="5"></td>
+                <td id="6"></td>
+                <td id="7"></td>
+                <td id="8"></td>
+            </tr>
+            <tr>
+                <td id="9"></td>
+                <td id="10"></td>
+                <td id="11"></td>
+                <td id="12"></td>
+            </tr>
+        </table>
+        <br><br>
+        <button id="rej">Rejouer</button>
+    </center>
+    <script type="text/javascript" src="../ex3/jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            function al() {
+                let t = ["jupiter.png", "neptune.png", "satume.png", "terre.png", "uranus.png", "venus.png", "jupiter.png", "neptune.png", "satume.png", "terre.png", "uranus.png", "venus.png"];
+                console.log(t);
+                let v = [];
+
+                function entierAleatoire(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+
+                var entier, y;
+                entier = entierAleatoire(0, 11);
+                for (let i = 0; i < 12; i++) {
+                    y = (entier + i) % 12;
+                    console.log(y);
+                    v.push(y);
+                }
+                for (let i = 0; i < 12; i++) { console.log(t[i]); }
+                for (let i = 0; i < 12; i++) {
+                    let x = v[i];
+                    document.getElementById(`${i + 1}`).innerHTML = `<img src=${t[x]} id="${i + 13}">`;
+                }
+                $("img").addClass("h");
+                let k = 0;
+                let s = "";
+                let p = "";
+                let n = 0;
+                $("#rej").addClass("h");
+
+
+                function d(pa) {
+                    $(`#${pa}`).removeClass("h")
+                    if (k == 0) {
+                        k++;
+                        s = document.getElementById(`${pa}`).src;
+                        console.log(document.getElementById(`${pa}`).src);
+                        p = `${pa}`;
+                    }
+                    else {
+                        if (s != document.getElementById(`${pa}`).src) {
+                            const myTimeout = setTimeout(ret, 2000);
+                            function ret() {
+                                $(`#${pa}`).addClass("h");
+                                $(`#${p}`).addClass("h");
+                                k = 0;
+                                s = "";
+                                p = "";
+                            }
+                        }
+                        else {
+                            k = 0;
+                            s = "";
+                            p = "";
+                            n++;
+                            if (n == 6) { $("#rej").removeClass("h"); }
+                        }
+                    }
+                }
+                for (let i = 13; i < 25; i++) { $(`#${i}`).click(function () { d(`${i}`) }); }
+
+            }
+            al();
+
+            $("#rej").click(function () {
+                al();
+                $("img").addClass("h");
+                $("#rej").addClass("h");
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>
